@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { analyzeListing } from "../server/analyze";
+// Extensión .js obligatoria: el paquete es ESM y Node no resuelve
+// especificadores sin extensión en la función de Vercel.
+import { analyzeListing } from "../server/analyze.js";
 
 /**
  * Equivalente serverless de la ruta POST /api/analyze del Express local.
