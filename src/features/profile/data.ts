@@ -1,3 +1,4 @@
+import { spanishProfessionalAvatar } from "@/assets/images";
 import {
   AppSettings,
   LifeStage,
@@ -15,7 +16,7 @@ export const LIFE_STAGES: LifeStage[] = [
 export const INITIAL_USER_PROFILE: UserProfile = {
   displayName: "Irene Mejía",
   email: "lamejiablooming@gmail.com",
-  avatarUrl: "/src/assets/images/spanish_professional_avatar_1784497207256.jpg",
+  avatarUrl: spanishProfessionalAvatar,
   contextLine: "Joven profesional buscando piso en Barcelona — Gràcia, Eixample, Poblenou…",
   lifeStage: "Joven Profesional",
   verificationStatus: "verified",

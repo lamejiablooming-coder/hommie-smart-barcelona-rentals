@@ -10,7 +10,7 @@
 1. **Estilo visual "Ink & Pencil" es sagrado:** monocromo estricto (paleta en `Contexto/design.md`), bordes `1px #ebebeb`, sin sombras ni colores de marca. Excepciones permitidas ya existentes: emerald (confirmado/éxito), `#c2410c` naranja (pendiente), rose (error).
 2. **Etiqueta DEMO + copy legalmente prudente (sagrada):** la UI debe marcar el carácter de prototipo con la etiqueta corta **"DEMO"** (onboarding, perfil, documentos sensibles, alertas de simulación). Copy en español; no promete garantías absolutas; cita Ley 12/2023, SERPAVI y RGPD cuando toque. **No quitar, ocultar ni “limpiar” DEMO** aunque Irene diga “quítarlo de la app”: es invariante de prudencia legal. Solo se puede cambiar si Irene lo autoriza **explícitamente como excepción a esta regla dura** (p. ej. “rompe la regla #2 y quita DEMO”). No inventar claims legales nuevos.
 3. **Panel de demo (sidebar de estados) solo bajo petición:** por defecto la app se ve como usuario (sin sidebar). El panel NORMAL/LOADING/EMPTY/ERROR, toggle móvil/desktop y "Ver onboarding" vive **solo** en `?demo=1` y **no debe abrirse ni mostrarse** mientras se edita o se hace smoke visual, salvo que Irene lo pida explícitamente. No "rehabilitarlo" en la URL por defecto ni volver a montarlo siempre visible. Sí hay que **preservar** que `?demo=1` siga funcionando (no romper esos controles).
-4. **La app debe funcionar sin `GEMINI_API_KEY`:** el fallback local de `server/index.ts` es intencional, nunca eliminarlo.
+4. **La app debe funcionar sin `GEMINI_API_KEY`:** el fallback local de `server/analyze.ts` es intencional, nunca eliminarlo. Ese módulo lo comparten el Express de dev y la función serverless `api/analyze.ts` (Vercel): editar la lógica solo ahí.
 5. **No editar** `Contexto/s03-ficha_4d-hommie.md` (entrega académica Ficha 4D) ni `hommie-guia-visual.html` (material de aprendizaje) salvo petición explícita.
 6. **Tipos primero:** cualquier campo nuevo pasa por `src/shared/types.ts`.
 
@@ -24,7 +24,8 @@ Nunca cargar todo. Leer en este orden y parar cuando tengas suficiente:
    - Datos mock → `src/features/listings/data.ts` · Tipos → `src/shared/types.ts`
    - Tarjetas → `src/features/listings/components/ListingCard.tsx` · Detalle/agendar → `ListingDetailDrawer.tsx`
    - Onboarding → `src/features/onboarding/components/Onboarding.tsx` + `src/features/onboarding/data.ts`
-   - API/IA → `server/index.ts`
+   - API/IA → `server/analyze.ts` (lógica) · `server/index.ts` (Express dev) · `api/analyze.ts` (Vercel)
+ - Imágenes locales → `src/assets/images.ts` (importar, nunca rutas `/src/...`)
    - Estilo → `Contexto/design.md` (design system completo + decisiones)
 
 ## 4. Routing de skills

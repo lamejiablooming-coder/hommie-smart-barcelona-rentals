@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { spanishProfessionalAvatar } from "@/assets/images";
 import {
   INITIAL_LISTINGS,
   INITIAL_VISITS,
@@ -245,7 +246,7 @@ export default function App() {
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full overflow-hidden border border-[#ebebeb]">
                 <img
-                  src="/src/assets/images/spanish_professional_avatar_1784497207256.jpg"
+                  src={spanishProfessionalAvatar}
                   alt="Avatar"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -417,7 +418,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full overflow-hidden border border-[#ebebeb]">
                 <img
-                  src="/src/assets/images/spanish_professional_avatar_1784497207256.jpg"
+                  src={spanishProfessionalAvatar}
                   alt="Profile"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

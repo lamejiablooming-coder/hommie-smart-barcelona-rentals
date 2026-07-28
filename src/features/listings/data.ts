@@ -1,3 +1,4 @@
+import { eixamplePenthouseInterior, loftInteriorClean } from "@/assets/images";
 import { Listing, Visit } from "@/shared/types";
 
 export const INITIAL_LISTINGS: Listing[] = [
@@ -29,7 +30,7 @@ export const INITIAL_LISTINGS: Listing[] = [
     price: 2100,
     neighborhood: "Eixample Dret",
     origin: "Fotocasa",
-    imageUrl: "/src/assets/images/eixample_penthouse_interior_1784582356140.jpg",
+    imageUrl: eixamplePenthouseInterior,
     securityScore: 89,
     securityReasons: "Agencia oficial registrada en AICAT. El precio es ligeramente superior a la media pero justificado por la terraza privativa de 20m². Contrato de 5 años LAU.",
     pros: [
@@ -52,7 +53,7 @@ export const INITIAL_LISTINGS: Listing[] = [
     price: 1800,
     neighborhood: "Poblenou",
     origin: "Habitaclia",
-    imageUrl: "/src/assets/images/loft_interior_clean_1784493968497.jpg",
+    imageUrl: loftInteriorClean,
     securityScore: 91,
     securityReasons: "Suministros ya dados de alta y verificados. Sin cargas administrativas pendientes. Edificio industrial reconvertido legalmente con cédula de habitabilidad vigente.",
     pros: [

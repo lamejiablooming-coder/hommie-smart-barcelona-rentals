@@ -1,3 +1,4 @@
+import { eixamplePenthouseInterior, loftInteriorClean } from "@/assets/images";
 import { OnboardingStep } from "@/shared/types";
 
 /** Mock copy — visual scenes, legal-safe claims (Ley 12/2023, SERPAVI, RGPD). */
@@ -8,7 +9,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     title: "Empieza por cómo quieres vivir",
     body: "Imagina tu próximo piso en Barcelona: cuánto puedes pagar, en qué barrios te ves (Gràcia, Eixample, Poblenou…) y en qué momento de vida estás. Eso es todo lo que Hommie necesita para empezar a trabajar por ti.",
     demoLabel: "DEMO",
-    imageUrl: "/src/assets/images/loft_interior_clean_1784493968497.jpg",
+    imageUrl: loftInteriorClean,
     moments: [
       {
         icon: "home",
@@ -28,7 +29,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     title: "Tú eliges; Hommie organiza el camino",
     body: "Lo de siempre en España: Idealista a las 7, WhatsApp al agente, Fotocasa a la vez… y el piso se alquila mientras respondes. Hommie junta ese caos en un solo camino: miras, visitas y avanzas sin perder el hilo.",
     demoLabel: "DEMO",
-    imageUrl: "/src/assets/images/eixample_penthouse_interior_1784582356140.jpg",
+    imageUrl: eixamplePenthouseInterior,
     moments: [
       {
         icon: "eye",

@@ -1,6 +1,8 @@
 # Estado del proyecto — actualizado 2026-07-28
 
 ## Hecho ✅
+- Imágenes mock arregladas en producción: importadas desde `src/assets/images.ts` (antes rutas `/src/assets/...` que daban 404 en Vercel). Gotcha #3 resuelto.
+- `/api/analyze` funciona en Vercel: lógica compartida en `server/analyze.ts`, consumida por el Express de dev y por la función `api/analyze.ts`. Config en `vercel.json`.
 - Vista por defecto = app a pantalla completa (usuario). Panel de demo (sidebar + simulador) solo con `?demo=1`.
 - Perfil rediseñado como espacio personal (`src/features/profile/components/ProfileTab.tsx` + `src/features/profile/data.ts`): hero persona, verificación (badge + señales), carpeta de documentos protegida, configuración (Calendar, notificaciones, RGPD). Presupuesto movido a Search.
 - Datos mock alineados a Barcelona (Gràcia, Eixample Dret, Poblenou); filtros de zonas en Search funcionan de verdad (gotcha #1 resuelto).

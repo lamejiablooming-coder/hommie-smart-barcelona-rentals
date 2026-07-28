@@ -9,11 +9,13 @@ Los listings/visitas de `src/features/listings/data.ts` ahora usan Gràcia, Eixa
 - Vista "Semana": el grid de 7 días es un array literal, no se deriva de `visits`.
 - Relojes "03:02" (status bar y sidebar) son decorativos.
 
-## 3. Rutas de imágenes `/src/assets/images/...`
-Funcionan en dev porque Vite sirve `/src`, pero es frágil en build de producción. Si el deploy pierde imágenes, importar los assets desde los componentes o moverlos a `public/`.
+## 3. Rutas de imágenes `/src/assets/images/...` ✅ RESUELTO (2026-07-28)
+Se cumplió el riesgo: en el deploy de Vercel esas rutas daban 404 (Vite solo sirve `/src` en dev) y la app se veía "rota". Ahora las tres imágenes mock se importan desde el barrel `src/assets/images.ts` y Vite las emite hasheadas en `dist/assets/`. Tipos de import de `.jpg` vía `src/vite-env.d.ts`.
+**Al añadir imágenes locales:** añadirlas al barrel e importarlas; **nunca** escribir la ruta `/src/...` como string.
 
 ## 4. IA con fallback silencioso
 Sin `GEMINI_API_KEY` válida, `/api/analyze` **no falla**: responde una simulación local (infiere barrio y precio del texto). Si "la IA responde raro pero siempre igual", es el fallback — mirar el `console.warn` del server. El placeholder `"MY_GEMINI_API_KEY"` también activa el fallback.
+La lógica vive en `server/analyze.ts` y la consumen dos entradas: el Express de dev (`server/index.ts`) y la función serverless de Vercel (`api/analyze.ts`). **Tocar solo `analyze.ts`**, o dev y producción se desincronizan.
 
 ## 5. Onboarding que "no aparece"
 El gate usa `sessionStorage` (clave en `src/features/onboarding/data.ts`). Tras completarlo una vez no vuelve a salir en esa pestaña: usar el botón "Ver onboarding" del sidebar o abrir ventana nueva.
