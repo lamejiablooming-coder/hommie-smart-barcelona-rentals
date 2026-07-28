@@ -1,8 +1,8 @@
 # Estado del proyecto — actualizado 2026-07-28
 
 ## Hecho ✅
+- **D4 · Deploy público funcionando:** https://hommie-smart-rentals-barcelona.vercel.app (Vercel, auto-deploy desde `main`). Verificado: imágenes 200, `/api/analyze` 200 con fallback.
 - Imágenes mock arregladas en producción: importadas desde `src/assets/images.ts` (antes rutas `/src/assets/...` que daban 404 en Vercel). Gotcha #3 resuelto.
-- `/api/analyze` funciona en Vercel: lógica compartida en `server/analyze.ts`, consumida por el Express de dev y por la función `api/analyze.ts`. Config en `vercel.json`.
 - Vista por defecto = app a pantalla completa (usuario). Panel de demo (sidebar + simulador) solo con `?demo=1`.
 - Perfil rediseñado como espacio personal (`src/features/profile/components/ProfileTab.tsx` + `src/features/profile/data.ts`): hero persona, verificación (badge + señales), carpeta de documentos protegida, configuración (Calendar, notificaciones, RGPD). Presupuesto movido a Search.
 - Datos mock alineados a Barcelona (Gràcia, Eixample Dret, Poblenou); filtros de zonas en Search funcionan de verdad (gotcha #1 resuelto).
@@ -17,7 +17,7 @@
 - Paquete renombrado a `hommie-smart-barcelona-rentals` y README actualizado.
 
 ## Pendiente 🔜
-- **D4 · Deploy a URL pública** — verificación de entrega en `Contexto/s03-ficha_4d-hommie.md`. No hecho aún.
+- Título de la pestaña en `index.html` sigue siendo "My Google AI Studio App" (heredado de AI Studio); debería decir Hommie.
 - **D3 · Gaps vs Ficha 4D** (parcialmente cubiertos por el Gestor de Visitas):
   - Un click real a Google Calendar (hoy es simulación de sync).
   - Documento descargable con la info del día de la cita (no existe).

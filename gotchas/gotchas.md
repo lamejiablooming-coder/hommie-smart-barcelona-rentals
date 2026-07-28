@@ -17,6 +17,10 @@ Se cumplió el riesgo: en el deploy de Vercel esas rutas daban 404 (Vite solo si
 Sin `GEMINI_API_KEY` válida, `/api/analyze` **no falla**: responde una simulación local (infiere barrio y precio del texto). Si "la IA responde raro pero siempre igual", es el fallback — mirar el `console.warn` del server. El placeholder `"MY_GEMINI_API_KEY"` también activa el fallback.
 La lógica vive en `server/analyze.ts` y la consumen dos entradas: el Express de dev (`server/index.ts`) y la función serverless de Vercel (`api/analyze.ts`). **Tocar solo `analyze.ts`**, o dev y producción se desincronizan.
 
+## 4b. Imports relativos en `api/` necesitan extensión `.js`
+El paquete es ESM (`"type": "module"`), así que Node no resuelve `../server/analyze` sin extensión: la función de Vercel muere con `ERR_MODULE_NOT_FOUND` → 500 `FUNCTION_INVOCATION_FAILED` **antes** de entrar al handler, y la respuesta no dice por qué. Escribir `../server/analyze.js` aunque el archivo sea `.ts` (TypeScript lo resuelve igual). En dev no se nota porque `tsx` sí resuelve sin extensión.
+Reproducirlo sin desplegar: `npx esbuild api/analyze.ts server/analyze.ts --format=esm --platform=node --outdir=.fn-test --outbase=.` y luego importar `.fn-test/api/analyze.js` con node.
+
 ## 5. Onboarding que "no aparece"
 El gate usa `sessionStorage` (clave en `src/features/onboarding/data.ts`). Tras completarlo una vez no vuelve a salir en esa pestaña: usar el botón "Ver onboarding" del sidebar o abrir ventana nueva.
 

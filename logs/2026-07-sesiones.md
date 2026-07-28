@@ -26,5 +26,11 @@ App generada en AI Studio: dashboard, analizador IA, saved, profile, estados dem
 - Configurado el alias `@/`, renombrado el paquete y actualizado README y memoria interna.
 - Verificados type-check, build, carga local y fallback de `/api/analyze`.
 
+## S7 (2026-07-28) · Arreglado el deploy de Vercel
+- Síntoma: la URL pública se veía "rota" (onboarding pasos 1–2 sin foto, tarjetas Eixample/Poblenou y avatar de Perfil vacíos). Causa: las imágenes se referenciaban como `/src/assets/images/...`, ruta que solo sirve el dev server de Vite → 404 en producción. Arreglado importándolas desde `src/assets/images.ts`.
+- Segundo fallo detectado de paso: `/api/analyze` daba 404 porque en Vercel no corre `server/index.ts`. Lógica extraída a `server/analyze.ts` y expuesta también por `api/analyze.ts` + `vercel.json`.
+- Trampa de ESM: la función crasheaba (500 / FUNCTION_INVOCATION_FAILED) por importar `../server/analyze` sin extensión; con `"type": "module"` Node exige `.js`. Reproducido en local con esbuild antes de re-desplegar.
+- D4 cerrado: demo pública verificada (imágenes 200, API 200 con fallback, 400/405 correctos).
+
 ## Cómo añadir entradas
 Una sección por sesión importante, máx. 5 líneas: qué se hizo, qué se decidió, qué quedó pendiente. Sin transcripciones.
