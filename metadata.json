@@ -1,0 +1,6 @@
+{
+  "name": "HOMMIE",
+  "description": "Plataforma de agregación y análisis de ofertas de alquiler en Barcelona con recomendaciones personalizadas, comparativa de pros/contras y gestión de visitas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hommie — Guía visual para aprender</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #e4e0dc;
+      --paper: #f7f4f0;
+      --card: #ffffff;
+      --accent: #0d6b5c;
+      --accent-soft: #e6f3f0;
+      --warm: #b45309;
+      --warm-soft: #fff4e8;
+      --dash: #2c4a6e;
+      --dash-soft: #eaf0f7;
+      --search: #5b3d8f;
+      --search-soft: #f3eef9;
+      --saved: #8a3a4a;
+      --saved-soft: #f9eef0;
+      --profile: #3d5a3d;
+      --profile-soft: #eef5ee;
+      --drawer: #1f3a5f;
+      --shadow: 0 10px 30px rgba(26, 26, 26, 0.06);
+      --radius: 14px;
+      --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #e8f2ef 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, #f5ebe3 0%, transparent 50%),
+        var(--paper);
+      line-height: 1.55;
+    }
+
+    a { color: var(--accent); }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Hero */
+    header.hero {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 36px;
+      padding: 28px 28px 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--ink);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .lede {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 1.05rem;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .toc a {
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: #fafafa;
+    }
+    .toc a:hover { border-color: var(--ink); }
+
+    /* Sections */
+    section {
+      margin-top: 28px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sec-head {
+      padding: 22px 26px 10px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fcfcfb, #fff);
+    }
+    .sec-head h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+    .sec-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .sec-body { padding: 22px 26px 26px; }
+
+    /* 5 lines summary */
+    .five-lines {
+      display: grid;
+      gap: 12px;
+      counter-reset: line;
+    }
+    .five-lines li {
+      list-style: none;
+      position: relative;
+      padding: 14px 16px 14px 52px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfaf8;
+    }
+    .five-lines li::before {
+      counter-increment: line;
+      content: counter(line);
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+    }
+
+    /* Screens grid */
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .screen {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 180px;
+    }
+    .screen .tag {
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .screen h3 { margin: 0; font-size: 1.05rem; }
+    .screen p { margin: 0; color: var(--muted); font-size: 0.92rem; flex: 1; }
+    .screen .hint {
+      font-size: 12px;
+      color: var(--ink);
+      border-top: 1px dashed var(--line);
+      padding-top: 8px;
+    }
+    .t-dash { background: var(--dash-soft); color: var(--dash); }
+    .t-search { background: var(--search-soft); color: var(--search); }
+    .t-saved { background: var(--saved-soft); color: var(--saved); }
+    .t-profile { background: var(--profile-soft); color: var(--profile); }
+    .t-drawer { background: #eef3f9; color: var(--drawer); }
+    .t-side { background: var(--warm-soft); color: var(--warm); }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: stretch;
+    }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .flow-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+    .flow-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .flow-line {
+      width: 2px;
+      flex: 1;
+      min-height: 18px;
+      background: linear-gradient(180deg, var(--accent), #c5ddd8);
+      margin: 4px 0;
+    }
+    .flow-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fbfaf8;
+      margin-bottom: 12px;
+    }
+    .flow-card h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .flow-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .flow-card .arrow-note {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Horizontal mini flow (mobile-friendly SVG) */
+    .flow-svg-wrap {
+      margin-top: 18px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 16px 12px;
+    }
+    .flow-svg-wrap svg {
+      display: block;
+      min-width: 760px;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Dependency map */
+    .dep-svg-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 18px 12px;
+    }
+    .dep-svg-wrap svg {
+      display: block;
+      min-width: 820px;
+      width: 100%;
+      height: auto;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .swatch {
+      width: 18px;
+      height: 4px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* Data flow simple cards */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .data-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: var(--accent-soft);
+    }
+    .data-card.alt { background: var(--warm-soft); }
+    .data-card.blue { background: var(--dash-soft); }
+    .data-card h4 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+    }
+    .data-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Callouts */
+    .callout {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.95rem;
+    }
+    .callout strong { color: var(--ink); }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 20px 14px 60px; }
+      header.hero, .sec-head, .sec-body { padding-left: 16px; padding-right: 16px; }
+      .flow-step { grid-template-columns: 40px 1fr; gap: 10px; }
+      .flow-dot { width: 28px; height: 28px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="brand">
+        <span class="brand-mark">H</span>
+        Hommie · Guía de aprendizaje
+      </div>
+      <h1>Cómo funciona Hommie, en una sola página</h1>
+      <p class="lede">
+        Esta guía explica la app en lenguaje sencillo: qué hace, qué pantallas hay,
+        cómo pasa la información de una parte a otra, y qué depende de qué.
+        Ábrela en el navegador y léela de arriba abajo.
+      </p>
+      <nav class="toc" aria-label="Índice">
+        <a href="#resumen">Resumen en 5 líneas</a>
+        <a href="#pantallas">Pantallas</a>
+        <a href="#flujo">Flujo de experiencia</a>
+        <a href="#datos">Cómo fluye la información</a>
+        <a href="#mapa">Mapa de dependencias</a>
+      </nav>
+    </header>
+
+    <!-- RESUMEN -->
+    <section id="resumen">
+      <div class="sec-head">
+        <h2>1. Resumen en 5 líneas</h2>
+        <p>La idea completa, sin tecnicismos.</p>
+      </div>
+      <div class="sec-body">
+        <ol class="five-lines">
+          <li>
+            Hommie ayuda a encontrar y comparar pisos de alquiler (pensada para Barcelona):
+            junta ofertas, las valora y te ayuda a agendar visitas.
+          </li>
+          <li>
+            Tienes cuatro pantallas principales abajo: Inicio (Dashboard), Buscar (con análisis automático),
+            Guardados y Perfil; más un panel lateral de detalles cuando eliges un piso.
+          </li>
+          <li>
+            En el Perfil defines presupuesto, barrios y tipo de vida; esas preferencias
+            deciden qué pisos ves en el Inicio.
+          </li>
+          <li>
+            Puedes guardar pisos, abrir el detalle, ver pros/contras y una puntuación de fiabilidad,
+            y reservar una visita que aparece luego en el Inicio.
+          </li>
+          <li>
+            En Buscar puedes pegar un anuncio o un enlace: la app lo analiza (con ayuda de un “cerebro” externo
+            o una respuesta de respaldo) y el piso nuevo vuelve al Inicio.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PANTALLAS -->
+    <section id="pantallas">
+      <div class="sec-head">
+        <h2>2. Qué pantallas (y piezas) tiene</h2>
+        <p>Cada pieza tiene un solo trabajo. Tocando la barra inferior cambias de pantalla.</p>
+      </div>
+      <div class="sec-body">
+        <div class="screens">
+          <article class="screen">
+            <span class="tag t-dash">Pestaña 1</span>
+            <h3>Dashboard (Inicio)</h3>
+            <p>Resumen del día: cuántos pisos encajan contigo, filtros rápidos, tarjetas de ofertas y un bloque de visitas agendadas que se puede abrir.</p>
+            <div class="hint">Aquí “viven” las recomendaciones.</div>
+          </article>
+          <article class="screen">
+            <span class="tag t-search">Pestaña 2</span>
+            <h3>Search (Buscar)</h3>
+            <p>Pegas un enlace o el texto de un anuncio para auditarlo. También puedes marcar barrios y tipos de piso.</p>
+            <div class="hint">Aquí entra información nueva desde fuera.</div>
+          </article>
+          <article class="screen">
+            <span class="tag t-saved">Pestaña 3</span>
+            <h3>Saved (Guardados)</h3>
+            <p>Lista solo de los pisos que marcaste con el icono de marcador. Si no hay ninguno, te lo dice con claridad.</p>
+            <div class="hint">Es un filtrado de los mismos pisos del Inicio.</div>
+          </article>
+          <article class="screen">
+            <span class="tag t-profile">Pestaña 4</span>
+            <h3>Profile (Perfil)</h3>
+            <p>Ajustas presupuesto máximo, momento de vida (estudiante, profesional…) y la conexión simulada con tu calendario.</p>
+            <div class="hint">Cambia lo que el Inicio te enseña.</div>
+          </article>
+          <article class="screen">
+            <span class="tag t-drawer">Sobre cualquier pestaña</span>
+            <h3>Detalle del piso</h3>
+            <p>Panel que se desliza al tocar una tarjeta: foto, precio, puntuación de seguridad, pros/contras y formulario para reservar visita.</p>
+            <div class="hint">No es una pestaña: se abre encima.</div>
+          </article>
+          <article class="screen">
+            <span class="tag t-side">Alrededor (demo)</span>
+            <h3>Panel de control</h3>
+            <p>En el escritorio hay un lateral de demostración: usuario, preferencias, estados (normal / cargando / vacío / error) y modo móvil o escritorio.</p>
+            <div class="hint">Sirve para probar escenarios, no es la app del usuario final.</div>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>También hay “estados” especiales:</strong>
+          pantalla de carga (esqueletos), sin resultados, y error de sincronización.
+          Se activan desde el panel de demo o cuando los filtros no encuentran nada.
+        </div>
+      </div>
+    </section>
+
+    <!-- FLUJO EXPERIENCIA -->
+    <section id="flujo">
+      <div class="sec-head">
+        <h2>3. Diagrama de flujo de la experiencia</h2>
+        <p>El camino típico de una persona que busca piso con Hommie.</p>
+      </div>
+      <div class="sec-body">
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-rail">
+              <div class="flow-dot">1</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-card">
+              <h3>Configuras tu perfil</h3>
+              <p>Dices cuánto puedes pagar, dónde te gustaría vivir y en qué etapa estás (por ejemplo, joven profesional).</p>
+              <div class="arrow-note">↓ Eso condiciona qué ofertas aparecen</div>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="flow-rail">
+              <div class="flow-dot">2</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-card">
+              <h3>Miras el Inicio</h3>
+              <p>Ves cuántas opciones hay hoy, revisas visitas ya programadas y exploras las tarjetas (precio, barrio, un pro y un contra, fiabilidad).</p>
+              <div class="arrow-note">↓ Eliges un piso o vas a Buscar / Guardados</div>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="flow-rail">
+              <div class="flow-dot">3</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-card">
+              <h3>Abres el detalle</h3>
+              <p>Lees el análisis de seguridad, pros y contras completos. Si te interesa, eliges día, hora y dejas tus datos de contacto.</p>
+              <div class="arrow-note">↓ Se crea una visita confirmada</div>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="flow-rail">
+              <div class="flow-dot">4</div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-card">
+              <h3>La visita vuelve al Inicio</h3>
+              <p>Aparece en el bloque de visitas (vista día / semana / mes). También puedes marcar el piso como guardado para encontrarlo rápido.</p>
+              <div class="arrow-note">↓ Opcional: traes un anuncio de fuera</div>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="flow-rail">
+              <div class="flow-dot">5</div>
+            </div>
+            <div class="flow-card">
+              <h3>Analizas un anuncio nuevo (Buscar)</h3>
+              <p>Pegas URL o texto → Hommie lo analiza → el piso entra en tu lista → vuelves al Inicio a verlo.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-svg-wrap" aria-label="Diagrama horizontal del flujo">
+          <svg viewBox="0 0 900 220" role="img" aria-labelledby="flowTitle flowDesc">
+            <title id="flowTitle">Flujo de experiencia Hommie</title>
+            <desc id="flowDesc">Perfil hacia Inicio hacia Detalle hacia Visita, y Buscar hacia Inicio</desc>
+
+            <!-- Boxes -->
+            <rect x="20" y="70" width="120" height="56" rx="10" fill="#eef5ee" stroke="#3d5a3d" stroke-width="1.5"/>
+            <text x="80" y="95" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Perfil</text>
+            <text x="80" y="112" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">preferencias</text>
+
+            <rect x="190" y="70" width="120" height="56" rx="10" fill="#eaf0f7" stroke="#2c4a6e" stroke-width="1.5"/>
+            <text x="250" y="95" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Inicio</text>
+            <text x="250" y="112" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">ofertas + visitas</text>
+
+            <rect x="360" y="70" width="120" height="56" rx="10" fill="#eef3f9" stroke="#1f3a5f" stroke-width="1.5"/>
+            <text x="420" y="95" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Detalle</text>
+            <text x="420" y="112" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">análisis + reserva</text>
+
+            <rect x="530" y="70" width="120" height="56" rx="10" fill="#e6f3f0" stroke="#0d6b5c" stroke-width="1.5"/>
+            <text x="590" y="95" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Visita</text>
+            <text x="590" y="112" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">queda agendada</text>
+
+            <rect x="700" y="70" width="160" height="56" rx="10" fill="#f3eef9" stroke="#5b3d8f" stroke-width="1.5"/>
+            <text x="780" y="95" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Buscar / IA</text>
+            <text x="780" y="112" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">anuncio nuevo</text>
+
+            <!-- Arrows main path -->
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#0d6b5c"/>
+              </marker>
+              <marker id="arrowMuted" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#8a8a8a"/>
+              </marker>
+            </defs>
+
+            <line x1="140" y1="98" x2="185" y2="98" stroke="#0d6b5c" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="310" y1="98" x2="355" y2="98" stroke="#0d6b5c" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="480" y1="98" x2="525" y2="98" stroke="#0d6b5c" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <!-- Visit back to Dashboard -->
+            <path d="M590 126 C590 170, 250 170, 250 130" fill="none" stroke="#0d6b5c" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+            <text x="420" y="188" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#0d6b5c" font-weight="600">la visita vuelve al Inicio</text>
+
+            <!-- Search feeds Dashboard -->
+            <path d="M780 70 C780 30, 250 30, 250 68" fill="none" stroke="#5b3d8f" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowMuted)"/>
+            <text x="520" y="24" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#5b3d8f" font-weight="600">el piso analizado se añade al Inicio</text>
+
+            <!-- Saved branch -->
+            <rect x="190" y="155" width="120" height="40" rx="8" fill="#f9eef0" stroke="#8a3a4a" stroke-width="1.2"/>
+            <text x="250" y="180" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#8a3a4a">Guardados</text>
+            <line x1="250" y1="126" x2="250" y2="152" stroke="#8a3a4a" stroke-width="1.5" marker-end="url(#arrowMuted)"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATOS -->
+    <section id="datos">
+      <div class="sec-head">
+        <h2>4. Cómo fluye la información</h2>
+        <p>Qué “datos” se mueven y quién los usa. Piensa en cajas compartidas, no en páginas aisladas.</p>
+      </div>
+      <div class="sec-body">
+        <div class="data-grid">
+          <div class="data-card">
+            <h4>Lista de pisos</h4>
+            <p>Empieza con unos cuantos de ejemplo. Se filtra por presupuesto/barrio/tipo. Se puede ampliar con el análisis de Buscar. Guardar marca un piso dentro de esta misma lista.</p>
+          </div>
+          <div class="data-card alt">
+            <h4>Lista de visitas</h4>
+            <p>Empieza con visitas de ejemplo. Cuando reservas desde el Detalle, se añade una visita nueva. El Inicio las enseña; el Detalle mira si ese piso ya tiene visita confirmada.</p>
+          </div>
+          <div class="data-card blue">
+            <h4>Preferencias del perfil</h4>
+            <p>Presupuesto, barrios, tipos y momento de vida. No son pantallas separadas de datos: el Inicio (y Buscar) leen estos valores para filtrar.</p>
+          </div>
+          <div class="data-card" style="background:#f3eef9">
+            <h4>Análisis externo</h4>
+            <p>Desde Buscar se envía el texto/enlace a un servicio de análisis. Vuelve un resumen (precio, barrio, puntuación, pros, contras) y se convierte en un piso más de la lista.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>En una frase:</strong>
+          el Perfil filtra → el Inicio muestra → el Detalle reserva → las visitas y los guardados se actualizan en la misma “memoria” de la sesión → Buscar puede meter pisos nuevos en esa memoria.
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPA DEPENDENCIAS -->
+    <section id="mapa">
+      <div class="sec-head">
+        <h2>5. Mapa de dependencias entre pantallas y partes</h2>
+        <p>Quién necesita a quién. Las flechas significan “usa información de” o “abre / alimenta a”.</p>
+      </div>
+      <div class="sec-body">
+        <div class="dep-svg-wrap" aria-label="Mapa de dependencias">
+          <svg viewBox="0 0 900 520" role="img" aria-labelledby="depTitle depDesc">
+            <title id="depTitle">Mapa de dependencias Hommie</title>
+            <desc id="depDesc">Relaciones entre App central, pantallas, tarjetas, detalle, datos y análisis</desc>
+
+            <defs>
+              <marker id="depArrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#5c5c5c"/>
+              </marker>
+              <marker id="depArrowAccent" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#0d6b5c"/>
+              </marker>
+            </defs>
+
+            <!-- Central App -->
+            <rect x="340" y="210" width="220" height="70" rx="12" fill="#1a1a1a"/>
+            <text x="450" y="240" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" font-weight="800" fill="#fff">App (cerebro central)</text>
+            <text x="450" y="260" text-anchor="middle" font-family="Segoe UI, Arial" font-size="11" fill="#cfcfcf">guarda pisos, visitas, filtros y pestaña activa</text>
+
+            <!-- Screens -->
+            <rect x="40" y="40" width="150" height="54" rx="10" fill="#eaf0f7" stroke="#2c4a6e" stroke-width="1.5"/>
+            <text x="115" y="72" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Dashboard</text>
+
+            <rect x="230" y="40" width="150" height="54" rx="10" fill="#f3eef9" stroke="#5b3d8f" stroke-width="1.5"/>
+            <text x="305" y="72" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Search</text>
+
+            <rect x="420" y="40" width="150" height="54" rx="10" fill="#f9eef0" stroke="#8a3a4a" stroke-width="1.5"/>
+            <text x="495" y="72" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Saved</text>
+
+            <rect x="610" y="40" width="150" height="54" rx="10" fill="#eef5ee" stroke="#3d5a3d" stroke-width="1.5"/>
+            <text x="685" y="72" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" font-weight="700" fill="#1a1a1a">Profile</text>
+
+            <!-- Components -->
+            <rect x="40" y="400" width="170" height="54" rx="10" fill="#fff4e8" stroke="#b45309" stroke-width="1.5"/>
+            <text x="125" y="422" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#1a1a1a">Tarjeta de piso</text>
+            <text x="125" y="440" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#5c5c5c">muestra + guardar</text>
+
+            <rect x="250" y="400" width="190" height="54" rx="10" fill="#eef3f9" stroke="#1f3a5f" stroke-width="1.5"/>
+            <text x="345" y="422" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#1a1a1a">Detalle (panel lateral)</text>
+            <text x="345" y="440" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#5c5c5c">análisis + agendar visita</text>
+
+            <!-- Data sources -->
+            <rect x="520" y="390" width="160" height="70" rx="10" fill="#fbfaf8" stroke="#a8a8a8" stroke-width="1.5"/>
+            <text x="600" y="418" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#1a1a1a">Datos de ejemplo</text>
+            <text x="600" y="438" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#5c5c5c">pisos + visitas iniciales</text>
+
+            <rect x="710" y="390" width="160" height="70" rx="10" fill="#e6f3f0" stroke="#0d6b5c" stroke-width="1.5"/>
+            <text x="790" y="418" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#1a1a1a">Servicio de análisis</text>
+            <text x="790" y="438" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#5c5c5c">lee anuncio → resumen</text>
+
+            <!-- Demo panel -->
+            <rect x="710" y="200" width="160" height="70" rx="10" fill="#fff4e8" stroke="#b45309" stroke-width="1.5"/>
+            <text x="790" y="230" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" font-weight="700" fill="#1a1a1a">Panel demo</text>
+            <text x="790" y="248" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#5c5c5c">estados y modo móvil</text>
+
+            <!-- Lines: screens <-> app -->
+            <line x1="115" y1="94" x2="400" y2="210" stroke="#5c5c5c" stroke-width="1.4" marker-end="url(#depArrow)"/>
+            <line x1="305" y1="94" x2="430" y2="210" stroke="#5c5c5c" stroke-width="1.4" marker-end="url(#depArrow)"/>
+            <line x1="495" y1="94" x2="470" y2="210" stroke="#5c5c5c" stroke-width="1.4" marker-end="url(#depArrow)"/>
+            <line x1="685" y1="94" x2="520" y2="210" stroke="#5c5c5c" stroke-width="1.4" marker-end="url(#depArrow)"/>
+
+            <!-- App to components -->
+            <line x1="400" y1="280" x2="160" y2="400" stroke="#0d6b5c" stroke-width="1.6" marker-end="url(#depArrowAccent)"/>
+            <line x1="430" y1="280" x2="340" y2="400" stroke="#0d6b5c" stroke-width="1.6" marker-end="url(#depArrowAccent)"/>
+
+            <!-- Card opens drawer -->
+            <path d="M210 427 C230 360, 280 360, 250 410" fill="none" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#depArrow)"/>
+            <text x="255" y="355" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#1f3a5f">al tocar → abre</text>
+
+            <!-- Data sources into app -->
+            <line x1="600" y1="390" x2="500" y2="280" stroke="#5c5c5c" stroke-width="1.4" marker-end="url(#depArrow)"/>
+            <line x1="790" y1="390" x2="540" y2="280" stroke="#0d6b5c" stroke-width="1.6" marker-end="url(#depArrowAccent)"/>
+
+            <!-- Search to analyze service -->
+            <path d="M380 67 C520 67, 790 120, 790 390" fill="none" stroke="#5b3d8f" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#depArrow)"/>
+            <text x="820" y="160" text-anchor="start" font-family="Segoe UI, Arial" font-size="10" fill="#5b3d8f">Search pide análisis</text>
+
+            <!-- Demo to app -->
+            <line x1="710" y1="235" x2="560" y2="245" stroke="#b45309" stroke-width="1.4" marker-end="url(#depArrow)"/>
+
+            <!-- Profile filters note -->
+            <text x="760" y="120" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#3d5a3d">Perfil → filtra lo del Inicio</text>
+            <path d="M685 94 C685 150, 115 150, 115 94" fill="none" stroke="#3d5a3d" stroke-width="1.2" stroke-dasharray="4 3"/>
+
+            <!-- Labels -->
+            <text x="40" y="500" font-family="Segoe UI, Arial" font-size="11" fill="#5c5c5c">Lectura: las pantallas no se hablan entre sí directamente; todas dependen del cerebro central (App).</text>
+          </svg>
+        </div>
+
+        <div class="legend">
+          <span><i class="swatch" style="background:#5c5c5c"></i> Depende / usa</span>
+          <span><i class="swatch" style="background:#0d6b5c"></i> Envía o actualiza datos</span>
+          <span><i class="swatch" style="background:#5b3d8f"></i> Camino del análisis de anuncios</span>
+          <span><i class="swatch" style="background:#b45309"></i> Controles de demostración</span>
+        </div>
+
+        <div class="callout">
+          <strong>Clave para aprender:</strong>
+          Dashboard y Saved reutilizan la misma <em>Tarjeta de piso</em>.
+          El Detalle no es una pestaña más: lo abre la tarjeta y escribe visitas en la App.
+          Search es la única puerta hacia el servicio de análisis.
+          Profile no enseña pisos: solo cambia las reglas del filtro.
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Archivo de aprendizaje aparte · no forma parte del código de la app · Hommie / PisoMatch
+    </footer>
+  </div>
+</body>
+</html>
