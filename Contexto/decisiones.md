@@ -18,5 +18,6 @@ Formato: una línea por decisión. Detalle y razonamiento en el archivo indicado
 | 2026-07-23 | Panel de estados (`?demo=1`) solo bajo petición al editar; default = vista usuario | `decisions/2026-07.md` |
 | 2026-07-23 | Etiqueta DEMO restaurada; regla #2 reforzada (no quitar sin excepción explícita) | `decisions/2026-07.md` |
 | 2026-07-28 | Deploy Vercel: imágenes importadas (no rutas `/src/...`) y `/api/analyze` como función serverless | `decisions/2026-07.md` |
+| 2026-07-29 | Escala tipográfica desktop por container queries + contenido a máx. 1440px | `decisions/2026-07.md` |
 
 **Regla:** cada decisión nueva se añade aquí (1 línea) y se detalla en `decisions/AAAA-MM.md`.

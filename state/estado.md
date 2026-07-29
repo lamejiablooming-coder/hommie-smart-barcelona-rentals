@@ -1,6 +1,7 @@
-# Estado del proyecto — actualizado 2026-07-28
+# Estado del proyecto — actualizado 2026-07-29
 
 ## Hecho ✅
+- **Escala responsive de desktop (2026-07-29):** tipografía, avatar y espaciados crecen con container queries `@3xl/app`/`@5xl/app`; hero "3 nuevas opciones" ocupa el ancho; contenido centrado a máx. 1440px; grid de tarjetas por contenedor (1 / 2 / 3 columnas). Móvil intacto. Foto de Gràcia regenerada con más nitidez (`*_hq.jpg`).
 - **D4 · Deploy público funcionando:** https://hommie-smart-rentals-barcelona.vercel.app (Vercel, auto-deploy desde `main`). Verificado: imágenes 200, `/api/analyze` 200 con fallback.
 - Imágenes mock arregladas en producción: importadas desde `src/assets/images.ts` (antes rutas `/src/assets/...` que daban 404 en Vercel). Gotcha #3 resuelto.
 - Vista por defecto = app a pantalla completa (usuario). Panel de demo (sidebar + simulador) solo con `?demo=1`.
