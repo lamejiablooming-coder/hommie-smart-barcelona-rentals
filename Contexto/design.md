@@ -70,6 +70,11 @@ Ancho: el contenido se centra en `max-w-[1440px]` con padding `24 → 40 → 56p
 ### Navigation header
 Fondo `#ffffff`, borde inferior `1px #ebebeb`. Logo `HOMMIE` en `15px` bold uppercase + icono de casa minimalista. Avatar redondo `w-8 h-8` con contorno `#ebebeb`.
 
+### Navegación por tabs (decisión 2026-07-29)
+Una sola lista de tabs (`MAIN_TABS` en `src/App.tsx`) con dos presentaciones según el ancho del contenedor:
+- **Móvil (< `@3xl/app`):** barra inferior con los 4 tabs, icono sobre label `10px`.
+- **Desktop (≥ `@3xl/app`):** barra horizontal bajo el header con Dashboard, Search y Saved (icono + label `13px` en línea). Activo = texto `#252525` + subrayado `1px #252525` que solapa el borde del header. **Profile no aparece**: su acceso es el avatar del header, que pasa a borde `#252525` cuando la pestaña está activa.
+
 ### Gestor de Visitas (widget del Dashboard)
 - **Decisión:** cápsula colapsable estilo notificación ("Hommie te ha agendado nuevas visitas") que expande a **3 vistas**: Día (tarjetas tipo notificación), Semana (grid de 7 días + lista), Mes (matriz calendario).
 - **Razón:** ahorrar espacio vertical en móvil y demostrar 3 propuestas de layout exploradas con IA (ficha D1: la IA propone layouts, Irene decide). Evolución de las propuestas iniciales Fila/Línea/Cinta.
@@ -77,12 +82,14 @@ Fondo `#ffffff`, borde inferior `1px #ebebeb`. Logo `HOMMIE` en `15px` bold uppe
 ### Grid de tarjetas de propiedades
 Ratio `4:5`, hover con escala `1.05`, captions en graphite (`#a8a8a8`), micro-indicadores check/uncheck. CTA centrado `VER TODAS LAS OPCIONES` con borde `#ebebeb` y tracking ancho.
 
+**CTA "Ver todas las opciones" (decisión 2026-07-29):** no navega a Search. Muestra spinner ("BUSCANDO MÁS") y se sustituye en su sitio por una caja de borde discontinuo `#ebebeb` con el aviso "Hoy no hay más opciones", los filtros activos y la marca DEMO. Se resetea al cambiar filtros y solo se renderiza si hay resultados (el caso vacío ya tiene su propio bloque).
+
 ---
 
 ## 6. Layout de la demo
 - **Vista por defecto (edición y uso):** solo la app de producto, a pantalla completa — sin sidebar de estados. URL: `/`.
 - **Panel de demo bajo petición:** sidebar editorial (320px: NORMAL/LOADING/EMPTY/ERROR, viewport móvil/desktop, onboarding) + workspace con simulador iPhone 375×812 o desktop. URL: `/?demo=1`. Es herramienta de presentación, no parte del producto. **No abrirla ni mostrarla al editar** salvo petición explícita de Irene; sí preservar que `?demo=1` siga intacto.
-- **App móvil:** 4 tabs inferiores — Dashboard, Search (analizador IA), Saved, Profile.
+- **App móvil:** 4 tabs inferiores — Dashboard, Search (analizador IA), Saved, Profile. En desktop esos tabs suben bajo el header y Profile vive en el avatar (ver §5).
 
 ---
 
