@@ -39,7 +39,18 @@ import {
   Layers,
   Columns3,
   MessageSquare,
+  type LucideIcon,
 } from "lucide-react";
+
+const MAIN_TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
+  { id: "DASHBOARD", label: "Dashboard", icon: LayoutDashboard },
+  { id: "SEARCH", label: "Search", icon: Search },
+  { id: "SAVED", label: "Saved", icon: Bookmark },
+  { id: "PROFILE", label: "Profile", icon: User },
+];
+
+// En desktop el perfil se abre desde el avatar del header, no desde la nav.
+const DESKTOP_TABS = MAIN_TABS.filter((tab) => tab.id !== "PROFILE");
 
 export default function App() {
   // Application State
@@ -109,6 +120,15 @@ export default function App() {
   // Layout proposals state for the selected visits component
   const [visitViewStyle, setVisitViewStyle] = useState<"day" | "week" | "month">("day");
   const [isVisitsExpanded, setIsVisitsExpanded] = useState<boolean>(false);
+
+  // "Ver todas las opciones": busca más resultados sin salir del dashboard
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+  const [hasCheckedForMore, setHasCheckedForMore] = useState<boolean>(false);
+
+  // Al cambiar los filtros vuelve a tener sentido buscar más
+  useEffect(() => {
+    setHasCheckedForMore(false);
+  }, [budget, selectedNeighborhoods, selectedTypes]);
 
   // Filter listings based on current filters & active state
   const filteredListings = listings.filter((l) => {
@@ -428,7 +448,9 @@ export default function App() {
               <button
                 onClick={() => setActiveTab("PROFILE")}
                 aria-label="Ir a tu perfil"
-                className="w-8 h-8 @3xl/app:w-16 @3xl/app:h-16 @5xl/app:w-[72px] @5xl/app:h-[72px] rounded-full overflow-hidden border border-[#ebebeb] hover:border-[#252525] transition-colors shrink-0"
+                className={`w-8 h-8 @3xl/app:w-16 @3xl/app:h-16 @5xl/app:w-[72px] @5xl/app:h-[72px] rounded-full overflow-hidden border hover:border-[#252525] transition-colors shrink-0 ${
+                  activeTab === "PROFILE" ? "border-[#252525]" : "border-[#ebebeb]"
+                }`}
               >
                 <img
                   src={spanishProfessionalAvatar}
@@ -439,6 +461,30 @@ export default function App() {
               </button>
             </div>
           </header>
+
+          {/* A.2 Desktop Tab Navigation Bar
+              Misma navegación que la barra inferior de móvil, pero en horizontal bajo el
+              header. Profile se omite: su acceso es el avatar del header. */}
+          <nav className="hidden @3xl/app:flex gap-8 px-10 @5xl/app:px-14 bg-white border-b border-[#ebebeb] select-none shrink-0">
+            {DESKTOP_TABS.map(({ id, label, icon: Icon }) => {
+              const isActive = activeTab === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => setActiveTab(id)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`flex items-center gap-2 py-4 -mb-px border-b transition-colors ${
+                    isActive
+                      ? "border-[#252525] text-[#252525]"
+                      : "border-transparent text-[#a8a8a8] hover:text-[#252525]"
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 ${isActive ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+                  <span className="text-[13px] font-semibold tracking-tight">{label}</span>
+                </button>
+              );
+            })}
+          </nav>
 
           {/* B. Core Content Area (Scrollable viewport)
               El contenido se centra con un ancho máximo (~1200px) para que en desktop
@@ -899,14 +945,39 @@ export default function App() {
                       )}
 
                       {/* Call to Action */}
-                      <div className="mt-8 mb-8 flex justify-center">
-                        <button
-                          onClick={() => setActiveTab("SEARCH")}
-                          className="border border-[#ebebeb] px-6 py-3 @3xl/app:px-10 @3xl/app:py-4 font-medium text-xs @3xl/app:text-sm tracking-[0.2em] text-[#252525] bg-white hover:bg-[#252525] hover:text-white transition-all duration-300 uppercase"
-                        >
-                          VER TODAS LAS OPCIONES
-                        </button>
-                      </div>
+                      {filteredListings.length > 0 && (
+                        <div className="mt-8 mb-8 flex justify-center">
+                          {hasCheckedForMore ? (
+                            <div className="border border-dashed border-[#ebebeb] px-6 py-6 @3xl/app:px-10 text-center space-y-2 max-w-[340px] @3xl/app:max-w-[420px]">
+                              <h3 className="text-xs @3xl/app:text-sm font-bold uppercase tracking-widest text-[#252525]">
+                                Hoy no hay más opciones
+                              </h3>
+                              <p className="text-xs @3xl/app:text-sm text-[#8e8e8e] leading-relaxed">
+                                Ya has visto las {filteredListings.length} opciones publicadas hoy con tus filtros
+                                ({selectedNeighborhoods.join(", ") || "todas las zonas"} · hasta {budget}€).
+                                Hommie sigue rastreando y te avisará cuando aparezcan nuevas. Simulación DEMO con datos de ejemplo.
+                              </p>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setIsLoadingMore(true);
+                                setTimeout(() => {
+                                  setIsLoadingMore(false);
+                                  setHasCheckedForMore(true);
+                                }, 900);
+                              }}
+                              disabled={isLoadingMore}
+                              className="border border-[#ebebeb] px-6 py-3 @3xl/app:px-10 @3xl/app:py-4 font-medium text-xs @3xl/app:text-sm tracking-[0.2em] text-[#252525] bg-white hover:bg-[#252525] hover:text-white transition-all duration-300 uppercase disabled:opacity-60 disabled:hover:bg-white disabled:hover:text-[#252525] flex items-center gap-2"
+                            >
+                              {isLoadingMore && (
+                                <RefreshCw className="w-3.5 h-3.5 @3xl/app:w-4 @3xl/app:h-4 animate-spin" />
+                              )}
+                              {isLoadingMore ? "BUSCANDO MÁS" : "VER TODAS LAS OPCIONES"}
+                            </button>
+                          )}
+                        </div>
+                      )}
 
 
 
@@ -1103,51 +1174,24 @@ export default function App() {
           </div>
           </div>
 
-          {/* C. Bottom App Tab Navigation Bar */}
-          <nav className="bg-white border-t border-[#ebebeb] px-4 py-2 flex justify-around items-center select-none shrink-0 z-10">
-            {/* Tab 1: Dashboard */}
-            <button
-              onClick={() => setActiveTab("DASHBOARD")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
-                activeTab === "DASHBOARD" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
-              }`}
-            >
-              <LayoutDashboard className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "DASHBOARD" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Dashboard</span>
-            </button>
-
-            {/* Tab 2: AI Search */}
-            <button
-              onClick={() => setActiveTab("SEARCH")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
-                activeTab === "SEARCH" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
-              }`}
-            >
-              <Search className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "SEARCH" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Search</span>
-            </button>
-
-            {/* Tab 3: Saved */}
-            <button
-              onClick={() => setActiveTab("SAVED")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
-                activeTab === "SAVED" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
-              }`}
-            >
-              <Bookmark className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "SAVED" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Saved</span>
-            </button>
-
-            {/* Tab 4: Profile */}
-            <button
-              onClick={() => setActiveTab("PROFILE")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
-                activeTab === "PROFILE" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
-              }`}
-            >
-              <User className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "PROFILE" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Profile</span>
-            </button>
+          {/* C. Bottom App Tab Navigation Bar (solo móvil; en desktop la nav vive bajo el header) */}
+          <nav className="@3xl/app:hidden bg-white border-t border-[#ebebeb] px-4 py-2 flex justify-around items-center select-none shrink-0 z-10">
+            {MAIN_TABS.map(({ id, label, icon: Icon }) => {
+              const isActive = activeTab === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => setActiveTab(id)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`flex flex-col items-center gap-1 py-1 px-3 text-xs font-medium transition-all ${
+                    isActive ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 ${isActive ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+                  <span className="text-[10px] font-semibold tracking-tight">{label}</span>
+                </button>
+              );
+            })}
           </nav>
           </>
           )}
