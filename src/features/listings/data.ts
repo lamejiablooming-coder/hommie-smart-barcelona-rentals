@@ -1,4 +1,8 @@
-import { eixamplePenthouseInterior, loftInteriorClean } from "@/assets/images";
+import {
+  eixamplePenthouseInterior,
+  graciaReformedInterior,
+  loftInteriorClean,
+} from "@/assets/images";
 import { Listing, Visit } from "@/shared/types";
 
 export const INITIAL_LISTINGS: Listing[] = [
@@ -7,7 +11,7 @@ export const INITIAL_LISTINGS: Listing[] = [
     price: 1450,
     neighborhood: "Gràcia",
     origin: "Idealista",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBX0n0WFBON0DCvAUzknQ55aAmT_jH-eyz6orPlDQxebWnIKaXLlox2TuV87SjXRAoBYZx8unL-paZCOiUfVdEPeUD-nru5HvVn6VXejUPBUbDrOn36a8XQFO9IqrClWwCiKlsKVwwJufP1IpEd32JraoDpLW5cIIGgv6NXaSMKn8j9AuAI7uswONNkUcuLI31CV15az91OMOj6UUIvCHZEYX3Ck90CfeJdXJkKMp22vDz0z8KyHouPjRm-Sloe1QHRc0T0145--M8",
+    imageUrl: graciaReformedInterior,
     securityScore: 94,
     securityReasons: "Coherencia de precio perfecta con la zona de Gràcia. Propietario con identidad validada en Registro Inmobiliario de Barcelona y fianza de 1 mes depositada en INCASÒL garantizada.",
     pros: [

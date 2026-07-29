@@ -45,6 +45,15 @@ Semánticos permitidos (solo estado): emerald = confirmado/éxito · `#c2410c` =
 | **Label Sm** | `12px` | `1.4` | `500` / `600` | Botones compactos, filtros, tags interactivos |
 | **Micro Metadata** | `10px` | `1.2` | `500` | Subtítulos uppercase, badges de timestamp |
 
+### Escala en desktop (decisión 2026-07-29)
+La tabla anterior es la escala **móvil**. En desktop la misma escala resultaba ilegible, así que a partir de `@3xl/app` (contenedor ≥ 768px) crece: cápsula de visitas `12 → 18/20px`, precio de tarjeta `15 → 24px`, pros/contras y captions `12 → 15px`, chips y CTA `12 → 14px`, labels de nav `10 → 13px`, avatar del header `32 → 64/72px`.
+
+Hero "RESUMEN DE HOY": número `96 → 144 → 176px`, frase `15 → 24 → 32px` con `flex-1` (sin `max-w-xs`) para que ocupe el ancho. Es el elemento de mayor jerarquía, seguido de la cápsula de visitas agendadas.
+
+**Regla:** usar **container queries** (`@3xl/app:`, `@5xl/app:`) y no `md:`/`lg:`, para que el simulador de 375px de `?demo=1` siga viéndose como móvil dentro de una ventana ancha.
+
+Ancho: el contenido se centra en `max-w-[1440px]` con padding `24 → 40 → 56px`. El tope no es solo de legibilidad — mantiene las tarjetas en ~416px CSS, por debajo del ancho nativo (896–1024px) de las fotos mock, que si no se ven blandas en pantallas grandes.
+
 ---
 
 ## 4. Spacing y bordes

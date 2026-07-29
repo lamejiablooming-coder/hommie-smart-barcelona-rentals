@@ -376,15 +376,20 @@ export default function App() {
       >
         
         {/* Conditional Wrap: Is it a simulated mobile frame or an expanded responsive desktop panel? */}
+        {/*
+          `@container/app`: la escala tipográfica de dentro responde al ancho de ESTE
+          contenedor, no del viewport. Así el simulador de 375px sigue viéndose como
+          móvil aunque la ventana sea de escritorio.
+        */}
         <div
           className={
             showDemoPanel
-              ? `transition-all duration-500 bg-[#ffffff] border border-[#ebebeb] ${
+              ? `@container/app transition-all duration-500 bg-[#ffffff] border border-[#ebebeb] ${
                   isSimulatorMode
                     ? "w-[375px] h-[812px] flex flex-col relative overflow-hidden shadow-2xl rounded-3xl"
                     : "w-full max-w-5xl h-full min-h-[780px] flex flex-col"
                 }`
-              : "w-full min-h-screen flex flex-col bg-[#ffffff]"
+              : "@container/app w-full min-h-screen flex flex-col bg-[#ffffff]"
           }
         >
           
@@ -408,27 +413,39 @@ export default function App() {
           ) : (
           <>
           {/* A. Top App Header */}
-          <header className="px-6 py-4 border-b border-[#ebebeb] flex justify-between items-center bg-white shrink-0">
-            <div className="flex items-center gap-2">
-              <Home className="w-5 h-5 text-[#252525] stroke-[1.5]" />
-              <span className="font-bold tracking-tighter text-sm uppercase text-[#252525]">HOMMIE</span>
+          <header className="px-6 py-4 @3xl/app:px-10 @3xl/app:py-6 @5xl/app:px-14 border-b border-[#ebebeb] flex justify-between items-center bg-white shrink-0">
+            <div className="flex items-center gap-2 @3xl/app:gap-3">
+              <Home className="w-5 h-5 @3xl/app:w-7 @3xl/app:h-7 text-[#252525] stroke-[1.5]" />
+              <span className="font-bold tracking-tighter text-sm @3xl/app:text-xl uppercase text-[#252525]">HOMMIE</span>
             </div>
 
             {/* Profile sync state */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-[#ebebeb]">
+            <div className="flex items-center gap-2 @3xl/app:gap-4">
+              <span className="hidden @3xl/app:block text-right text-base @5xl/app:text-lg font-bold text-[#252525] leading-tight">
+                Irene
+                <span className="block text-[11px] @5xl/app:text-xs font-medium uppercase tracking-widest text-[#a8a8a8]">{lifeStage}</span>
+              </span>
+              <button
+                onClick={() => setActiveTab("PROFILE")}
+                aria-label="Ir a tu perfil"
+                className="w-8 h-8 @3xl/app:w-16 @3xl/app:h-16 @5xl/app:w-[72px] @5xl/app:h-[72px] rounded-full overflow-hidden border border-[#ebebeb] hover:border-[#252525] transition-colors shrink-0"
+              >
                 <img
                   src={spanishProfessionalAvatar}
-                  alt="Profile"
+                  alt="Tu foto de perfil"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </button>
             </div>
           </header>
 
-          {/* B. Core Content Area (Scrollable viewport) */}
-          <div className="flex-grow overflow-y-auto bg-white p-6 space-y-6 hide-scrollbar relative">
+          {/* B. Core Content Area (Scrollable viewport)
+              El contenido se centra con un ancho máximo (~1200px) para que en desktop
+              las líneas de texto no se hagan ilegibles y las fotos no se escalen por
+              encima de su resolución nativa (896–1024px de ancho). */}
+          <div className="flex-grow overflow-y-auto bg-white hide-scrollbar relative">
+          <div className="w-full max-w-[1440px] mx-auto p-6 @3xl/app:px-10 @3xl/app:py-8 @5xl/app:px-14 space-y-6 @3xl/app:space-y-8">
             
             {/* -------------------- STATE 1: ERROR STATE -------------------- */}
             {appState === "ERROR" ? (
@@ -501,38 +518,38 @@ export default function App() {
                         {/* Interactive compact header bar (acts as a premium notification capsule when collapsed) */}
                         <div 
                           onClick={() => setIsVisitsExpanded(!isVisitsExpanded)}
-                          className="p-3 flex items-center justify-between gap-3 cursor-pointer select-none hover:bg-[#fdfdfd] transition-colors"
+                          className="p-3 @3xl/app:p-5 flex items-center justify-between gap-3 @3xl/app:gap-5 cursor-pointer select-none hover:bg-[#fdfdfd] transition-colors"
                         >
-                          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                          <div className="flex items-center gap-2.5 @3xl/app:gap-4 min-w-0 flex-1">
                             {/* Premium Minimalist notification circle */}
-                            <div className="relative shrink-0 flex items-center justify-center w-7 h-7 bg-[#252525] text-white border border-[#252525]">
-                              <MessageSquare className="w-3.5 h-3.5" />
-                              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#c2410c] border border-white animate-pulse"></span>
+                            <div className="relative shrink-0 flex items-center justify-center w-7 h-7 @3xl/app:w-11 @3xl/app:h-11 bg-[#252525] text-white border border-[#252525]">
+                              <MessageSquare className="w-3.5 h-3.5 @3xl/app:w-5 @3xl/app:h-5" />
+                              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 @3xl/app:w-2.5 @3xl/app:h-2.5 rounded-full bg-[#c2410c] border border-white animate-pulse"></span>
                             </div>
                             
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-[#252525] leading-tight">
+                              <p className="text-xs @3xl/app:text-lg @5xl/app:text-xl font-bold text-[#252525] leading-tight">
                                 Hommie te ha agendado nuevas visitas
                               </p>
-                              <p className="text-[10px] italic text-neutral-500 mt-0.5">
+                              <p className="text-[10px] @3xl/app:text-sm italic text-neutral-500 mt-0.5 @3xl/app:mt-1">
                                 {visits.length} visitas programadas
                               </p>
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-2 shrink-0">
-                            <span className={`hidden sm:inline-block text-[8px] font-mono font-bold uppercase px-2 py-0.5 border ${
+                          <div className="flex items-center gap-2 @3xl/app:gap-3 shrink-0">
+                            <span className={`hidden sm:inline-block text-[8px] @3xl/app:text-[11px] font-mono font-bold uppercase px-2 py-0.5 @3xl/app:px-3 @3xl/app:py-1.5 border ${
                               visits[0]?.status === "Confirmado"
                                 ? "text-white bg-[#252525] border-[#252525]"
                                 : "text-[#c2410c] bg-[#fff7ed] border-[#ffedd5]"
                             }`}>
                               {visits[0]?.status === "Confirmado" ? "Confirmada" : "Pendiente"}
                             </span>
-                            <div className="p-1 text-[#252525] bg-neutral-50 hover:bg-neutral-100 border border-[#ebebeb] transition-colors">
+                            <div className="p-1 @3xl/app:p-2 text-[#252525] bg-neutral-50 hover:bg-neutral-100 border border-[#ebebeb] transition-colors">
                               {isVisitsExpanded ? (
-                                <ChevronUp className="w-3.5 h-3.5" />
+                                <ChevronUp className="w-3.5 h-3.5 @3xl/app:w-5 @3xl/app:h-5" />
                               ) : (
-                                <ChevronDown className="w-3.5 h-3.5" />
+                                <ChevronDown className="w-3.5 h-3.5 @3xl/app:w-5 @3xl/app:h-5" />
                               )}
                             </div>
                           </div>
@@ -548,8 +565,8 @@ export default function App() {
                               transition={{ duration: 0.25, ease: "easeInOut" }}
                               className="border-t border-[#ebebeb]"
                             >
-                              <div className="p-3.5 bg-[#fcfcfc] border-b border-[#ebebeb] flex items-center justify-between gap-3">
-                                <span className="text-[9px] font-extrabold text-[#a8a8a8] uppercase tracking-widest">
+                              <div className="p-3.5 @3xl/app:px-5 @3xl/app:py-4 bg-[#fcfcfc] border-b border-[#ebebeb] flex items-center justify-between gap-3">
+                                <span className="text-[9px] @3xl/app:text-[11px] font-extrabold text-[#a8a8a8] uppercase tracking-widest">
                                   Organizar Visitas Por:
                                 </span>
                                 
@@ -567,20 +584,20 @@ export default function App() {
                                         setVisitViewStyle(id as any);
                                       }}
                                       title={label}
-                                      className={`p-1.5 transition-all ${
+                                      className={`p-1.5 @3xl/app:p-2.5 transition-all ${
                                         visitViewStyle === id
                                           ? "bg-[#252525] text-white"
                                           : "text-[#a8a8a8] hover:text-[#252525] hover:bg-white"
                                       }`}
                                       aria-label={label}
                                     >
-                                      <IconComponent className="w-3.5 h-3.5" />
+                                      <IconComponent className="w-3.5 h-3.5 @3xl/app:w-[18px] @3xl/app:h-[18px]" />
                                     </button>
                                   ))}
                                 </div>
                               </div>
 
-                              <div className="p-3.5 bg-white space-y-3.5">
+                              <div className="p-3.5 @3xl/app:p-5 bg-white space-y-3.5">
                                 {/* Proposal 1: Día (WhatsApp / iOS Calendar Notification Style) */}
                                 {visitViewStyle === "day" && (
                                   <div className="space-y-3">
@@ -594,46 +611,46 @@ export default function App() {
                                         className="border border-[#ebebeb] bg-white transition-all duration-200 cursor-pointer group hover:border-[#252525] flex flex-col justify-between"
                                       >
                                         {/* Top Notification Bar header */}
-                                        <div className="px-3 py-1.5 bg-[#fdf8f8] border-b border-[#ebebeb] flex items-center justify-between gap-2">
-                                          <span className="text-[8px] font-mono font-bold tracking-widest text-[#a8a8a8] uppercase flex items-center gap-1.5">
+                                        <div className="px-3 py-1.5 @3xl/app:px-4 @3xl/app:py-2.5 bg-[#fdf8f8] border-b border-[#ebebeb] flex items-center justify-between gap-2">
+                                          <span className="text-[8px] @3xl/app:text-[10px] font-mono font-bold tracking-widest text-[#a8a8a8] uppercase flex items-center gap-1.5">
                                             <span className={`w-1.5 h-1.5 rounded-full ${visit.status === "Confirmado" ? "bg-emerald-600 animate-pulse" : "bg-[#c2410c]"}`}></span>
                                             {visit.status === "Confirmado" ? "NOTIFICACIÓN CALENDARIO" : "AVISO PENDIENTE AGENTE"}
                                           </span>
-                                          <span className="text-[9px] font-bold text-[#252525] bg-white px-1.5 py-0.5 border border-[#ebebeb] uppercase tracking-wider">
+                                          <span className="text-[9px] @3xl/app:text-[11px] font-bold text-[#252525] bg-white px-1.5 py-0.5 @3xl/app:px-2.5 @3xl/app:py-1 border border-[#ebebeb] uppercase tracking-wider">
                                             {visit.date}
                                           </span>
                                         </div>
 
                                         {/* Main notification body (with zero text overlap and beautiful layout) */}
-                                        <div className="p-3.5 space-y-2">
+                                        <div className="p-3.5 @3xl/app:p-5 space-y-2 @3xl/app:space-y-3">
                                           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                                             <div className="space-y-0.5">
-                                              <span className="text-[9px] text-[#a8a8a8] uppercase tracking-wider font-bold">Hora Programada</span>
-                                              <span className="text-sm font-extrabold text-[#252525] block tracking-tight">
+                                              <span className="text-[9px] @3xl/app:text-[11px] text-[#a8a8a8] uppercase tracking-wider font-bold">Hora Programada</span>
+                                              <span className="text-sm @3xl/app:text-xl font-extrabold text-[#252525] block tracking-tight">
                                                 {visit.time} h — {visit.neighborhood}
                                               </span>
                                             </div>
                                             <div className="sm:text-right space-y-0.5">
-                                              <span className="text-[9px] text-[#a8a8a8] uppercase tracking-wider font-bold block">Tu Agente Hommie</span>
-                                              <span className="text-xs font-bold text-[#252525] block">{visit.agent || "Asignando..."}</span>
+                                              <span className="text-[9px] @3xl/app:text-[11px] text-[#a8a8a8] uppercase tracking-wider font-bold block">Tu Agente Hommie</span>
+                                              <span className="text-xs @3xl/app:text-base font-bold text-[#252525] block">{visit.agent || "Asignando..."}</span>
                                             </div>
                                           </div>
 
                                           <div className="border-t border-[#f5f5f5] pt-2 mt-1">
-                                            <span className="text-[9px] text-[#a8a8a8] uppercase tracking-wider font-bold block mb-0.5">Propiedad</span>
-                                            <p className="text-xs font-bold text-[#252525] leading-relaxed group-hover:underline break-words">
+                                            <span className="text-[9px] @3xl/app:text-[11px] text-[#a8a8a8] uppercase tracking-wider font-bold block mb-0.5">Propiedad</span>
+                                            <p className="text-xs @3xl/app:text-base font-bold text-[#252525] leading-relaxed group-hover:underline break-words">
                                               {visit.listingTitle}
                                             </p>
                                           </div>
                                         </div>
 
                                         {/* Bottom actionable bar */}
-                                        <div className="px-3 py-2 flex items-center justify-between text-[9px] font-bold border-t border-dotted border-[#ebebeb] bg-[#fcfcfc]">
+                                        <div className="px-3 py-2 @3xl/app:px-5 @3xl/app:py-3 flex items-center justify-between text-[9px] @3xl/app:text-[11px] font-bold border-t border-dotted border-[#ebebeb] bg-[#fcfcfc]">
                                           <span className={visit.status === "Confirmado" ? "text-emerald-700" : "text-[#c2410c]"}>
                                             {visit.status === "Confirmado" ? "✓ Horario confirmado" : "◷ Coordinando agenda"}
                                           </span>
                                           <span className="text-[#252525] underline uppercase tracking-wider flex items-center gap-0.5 group-hover:no-underline transition-all">
-                                            Ver detalles <ChevronRight className="w-2.5 h-2.5" />
+                                            Ver detalles <ChevronRight className="w-2.5 h-2.5 @3xl/app:w-3.5 @3xl/app:h-3.5" />
                                           </span>
                                         </div>
                                       </div>
@@ -812,46 +829,46 @@ export default function App() {
                         </AnimatePresence>
                       </div>
 
-                      {/* Hero Summary Section (Frameless, identical to mockup) */}
-                      <div className="mt-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                        <div className="space-y-1">
-                          <h2 className="text-xs font-bold uppercase tracking-widest text-[#a8a8a8]">RESUMEN DE HOY</h2>
-                          <div className="flex items-baseline gap-3">
-                            <span className="text-8xl font-extrabold tracking-tighter text-[#252525]">
-                              {filteredListings.length}
-                            </span>
-                            <p className="text-[15px] font-medium text-[#252525] max-w-xs leading-tight">
-                              Nuevas opciones encontradas basadas en tus preferencias
-                            </p>
-                          </div>
+                      {/* Hero Summary Section (Frameless, identical to mockup)
+                          En desktop ocupa todo el ancho: el número crece y el texto pasa
+                          a flex-1 para acompañarlo en lugar de quedarse en una columna. */}
+                      <div className="mt-4 mb-6 @3xl/app:mt-8 @3xl/app:mb-10 space-y-1 @3xl/app:space-y-3">
+                        <h2 className="text-xs @3xl/app:text-sm font-bold uppercase tracking-widest text-[#a8a8a8]">RESUMEN DE HOY</h2>
+                        <div className="flex items-baseline gap-3 @3xl/app:gap-8 @5xl/app:gap-10">
+                          <span className="text-8xl @3xl/app:text-[9rem] @5xl/app:text-[11rem] leading-[0.85] font-extrabold tracking-tighter text-[#252525]">
+                            {filteredListings.length}
+                          </span>
+                          <p className="text-[15px] @3xl/app:text-2xl @5xl/app:text-[32px] font-medium text-[#252525] max-w-xs @3xl/app:max-w-none @3xl/app:flex-1 leading-tight @3xl/app:leading-[1.2] @3xl/app:tracking-tight">
+                            Nuevas opciones encontradas basadas en tus preferencias
+                          </p>
                         </div>
                       </div>
 
                       {/* Filters Row (Identical to mockup) */}
-                      <div className="mb-8 flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+                      <div className="mb-8 flex gap-2 @3xl/app:gap-3 overflow-x-auto hide-scrollbar pb-2">
                         <button
                           onClick={() => setActiveTab("PROFILE")}
-                          className="border border-[#ebebeb] px-4 py-2 bg-white text-xs font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
+                          className="border border-[#ebebeb] px-4 py-2 @3xl/app:px-6 @3xl/app:py-3 bg-white text-xs @3xl/app:text-sm font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
                         >
                           Presupuesto
                         </button>
                         <button
                           onClick={() => setActiveTab("PROFILE")}
-                          className="border border-[#ebebeb] px-4 py-2 bg-white text-xs font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
+                          className="border border-[#ebebeb] px-4 py-2 @3xl/app:px-6 @3xl/app:py-3 bg-white text-xs @3xl/app:text-sm font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
                         >
                           Barrio
                         </button>
                         <button
                           onClick={() => setActiveTab("PROFILE")}
-                          className="border border-[#ebebeb] px-4 py-2 bg-white text-xs font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
+                          className="border border-[#ebebeb] px-4 py-2 @3xl/app:px-6 @3xl/app:py-3 bg-white text-xs @3xl/app:text-sm font-semibold hover:opacity-75 transition-opacity whitespace-nowrap text-[#252525]"
                         >
                           Tipo
                         </button>
                         <button
                           onClick={() => setActiveTab("PROFILE")}
-                          className="border border-[#ebebeb] px-4 py-2 bg-[#252525] text-white text-xs font-bold flex items-center gap-1.5 hover:opacity-90 transition-opacity whitespace-nowrap uppercase tracking-widest"
+                          className="border border-[#ebebeb] px-4 py-2 @3xl/app:px-6 @3xl/app:py-3 bg-[#252525] text-white text-xs @3xl/app:text-sm font-bold flex items-center gap-1.5 @3xl/app:gap-2 hover:opacity-90 transition-opacity whitespace-nowrap uppercase tracking-widest"
                         >
-                          <Sliders className="w-3.5 h-3.5 text-white" />
+                          <Sliders className="w-3.5 h-3.5 @3xl/app:w-4 @3xl/app:h-4 text-white" />
                           <span>FILTROS</span>
                         </button>
                       </div>
@@ -869,7 +886,7 @@ export default function App() {
                           </div>
                         </div>
                       ) : (
-                        <div className={`grid gap-8 ${isSimulatorMode ? "grid-cols-1" : "grid-cols-1 md:grid-cols-3"}`}>
+                        <div className="grid gap-8 @3xl/app:gap-10 grid-cols-1 @2xl/app:grid-cols-2 @5xl/app:grid-cols-3">
                           {filteredListings.map((listing) => (
                             <ListingCard
                               key={listing.id}
@@ -885,7 +902,7 @@ export default function App() {
                       <div className="mt-8 mb-8 flex justify-center">
                         <button
                           onClick={() => setActiveTab("SEARCH")}
-                          className="border border-[#ebebeb] px-6 py-3 font-medium text-xs tracking-[0.2em] text-[#252525] bg-white hover:bg-[#252525] hover:text-white transition-all duration-300 uppercase"
+                          className="border border-[#ebebeb] px-6 py-3 @3xl/app:px-10 @3xl/app:py-4 font-medium text-xs @3xl/app:text-sm tracking-[0.2em] text-[#252525] bg-white hover:bg-[#252525] hover:text-white transition-all duration-300 uppercase"
                         >
                           VER TODAS LAS OPCIONES
                         </button>
@@ -902,8 +919,8 @@ export default function App() {
                       
                       {/* AI Search Title */}
                       <div className="space-y-1">
-                        <h2 className="text-xs font-bold uppercase tracking-widest text-[#252525]">BÚSQUEDA Y ANÁLISIS POR IA</h2>
-                        <p className="text-xs text-[#8e8e8e]">Pega cualquier oferta encontrada en internet para auditarla de inmediato con Hommie.</p>
+                        <h2 className="text-xs @3xl/app:text-sm font-bold uppercase tracking-widest text-[#252525]">BÚSQUEDA Y ANÁLISIS POR IA</h2>
+                        <p className="text-xs @3xl/app:text-[15px] text-[#8e8e8e] @3xl/app:max-w-2xl">Pega cualquier oferta encontrada en internet para auditarla de inmediato con Hommie.</p>
                       </div>
 
                       {/* AI URL Input Form */}
@@ -1037,8 +1054,8 @@ export default function App() {
                   {activeTab === "SAVED" && (
                     <div className="space-y-6">
                       <div className="space-y-1">
-                        <h2 className="text-xs font-bold uppercase tracking-widest text-[#252525]">Ofertas Guardadas</h2>
-                        <p className="text-xs text-[#8e8e8e]">Colección de pisos en Barcelona pre-seleccionados por ti.</p>
+                        <h2 className="text-xs @3xl/app:text-sm font-bold uppercase tracking-widest text-[#252525]">Ofertas Guardadas</h2>
+                        <p className="text-xs @3xl/app:text-[15px] text-[#8e8e8e]">Colección de pisos en Barcelona pre-seleccionados por ti.</p>
                       </div>
 
                       {listings.filter((l) => l.isSaved).length === 0 ? (
@@ -1052,7 +1069,7 @@ export default function App() {
                           </div>
                         </div>
                       ) : (
-                        <div className="grid gap-6 grid-cols-1">
+                        <div className="grid gap-6 @3xl/app:gap-10 grid-cols-1 @2xl/app:grid-cols-2 @5xl/app:grid-cols-3">
                           {listings
                             .filter((l) => l.isSaved)
                             .map((listing) => (
@@ -1084,51 +1101,52 @@ export default function App() {
             )}
 
           </div>
+          </div>
 
           {/* C. Bottom App Tab Navigation Bar */}
           <nav className="bg-white border-t border-[#ebebeb] px-4 py-2 flex justify-around items-center select-none shrink-0 z-10">
             {/* Tab 1: Dashboard */}
             <button
               onClick={() => setActiveTab("DASHBOARD")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 text-xs font-medium transition-all ${
+              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
                 activeTab === "DASHBOARD" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
               }`}
             >
-              <LayoutDashboard className={`w-5 h-5 ${activeTab === "DASHBOARD" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] font-semibold tracking-tight">Dashboard</span>
+              <LayoutDashboard className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "DASHBOARD" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Dashboard</span>
             </button>
 
             {/* Tab 2: AI Search */}
             <button
               onClick={() => setActiveTab("SEARCH")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 text-xs font-medium transition-all ${
+              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
                 activeTab === "SEARCH" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
               }`}
             >
-              <Search className={`w-5 h-5 ${activeTab === "SEARCH" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] font-semibold tracking-tight">Search</span>
+              <Search className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "SEARCH" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Search</span>
             </button>
 
             {/* Tab 3: Saved */}
             <button
               onClick={() => setActiveTab("SAVED")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 text-xs font-medium transition-all ${
+              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
                 activeTab === "SAVED" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
               }`}
             >
-              <Bookmark className={`w-5 h-5 ${activeTab === "SAVED" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] font-semibold tracking-tight">Saved</span>
+              <Bookmark className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "SAVED" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Saved</span>
             </button>
 
             {/* Tab 4: Profile */}
             <button
               onClick={() => setActiveTab("PROFILE")}
-              className={`flex flex-col items-center gap-1 py-1 px-3 text-xs font-medium transition-all ${
+              className={`flex flex-col items-center gap-1 py-1 px-3 @3xl/app:gap-1.5 @3xl/app:py-2 @3xl/app:px-5 text-xs font-medium transition-all ${
                 activeTab === "PROFILE" ? "text-[#252525] scale-105" : "text-[#a8a8a8] hover:text-[#252525]"
               }`}
             >
-              <User className={`w-5 h-5 ${activeTab === "PROFILE" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
-              <span className="text-[10px] font-semibold tracking-tight">Profile</span>
+              <User className={`w-5 h-5 @3xl/app:w-6 @3xl/app:h-6 ${activeTab === "PROFILE" ? "stroke-[2.5]" : "stroke-[1.5]"}`} />
+              <span className="text-[10px] @3xl/app:text-[13px] font-semibold tracking-tight">Profile</span>
             </button>
           </nav>
           </>
