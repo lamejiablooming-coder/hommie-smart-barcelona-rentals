@@ -93,3 +93,68 @@ export interface AppSettings {
   notifyVisitReminders: boolean;
   rgpdConsent: boolean;
 }
+
+// --- Demo Day (ruta /demo-day, aislada del producto) ---
+
+/** Par etiqueta/valor de las secciones de decisiones, verificación y cierre. */
+export interface DemoDayPair {
+  id: string;
+  label: string;
+  value: string;
+}
+
+/** Pantalla del producto que se recorre en la demo en vivo. */
+export interface DemoDayScreen {
+  id: string;
+  index: string;
+  label: string;
+  detail: string;
+}
+
+interface DemoDaySlideBase {
+  id: string;
+  /** Nombre corto para la navegación de diapositivas. */
+  navLabel: string;
+  /** Tramo hablado, p. ej. "0:00–0:30". Ausente en la portada. */
+  timing?: string;
+}
+
+export interface DemoDayCoverSlide extends DemoDaySlideBase {
+  kind: "cover";
+  brand: string;
+  tagline: string;
+  urlLabel: string;
+  url: string;
+}
+
+export interface DemoDayBulletsSlide extends DemoDaySlideBase {
+  kind: "bullets";
+  title: string;
+  bullets: string[];
+}
+
+export interface DemoDayDemoSlide extends DemoDaySlideBase {
+  kind: "demo";
+  title: string;
+  ctaLabel: string;
+  url: string;
+  screens: DemoDayScreen[];
+  offCameraLabel: string;
+  offCamera: string;
+  demoLabel: string;
+  demoNote: string;
+}
+
+export interface DemoDayPairsSlide extends DemoDaySlideBase {
+  kind: "pairs";
+  title: string;
+  pairs: DemoDayPair[];
+  /** Par que se destaca como conclusión de la sección. */
+  highlightId?: string;
+}
+
+export type DemoDaySlide =
+  | DemoDayCoverSlide
+  | DemoDayBulletsSlide
+  | DemoDayDemoSlide
+  | DemoDayPairsSlide;

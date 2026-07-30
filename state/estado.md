@@ -1,6 +1,7 @@
-# Estado del proyecto — actualizado 2026-07-29
+# Estado del proyecto — actualizado 2026-07-30
 
 ## Hecho ✅
+- **Presentación Demo Day (2026-07-30):** ruta aislada `/demo-day` (6 diapositivas, flechas ← →, design system Ink & Pencil, sin tocar el flujo principal). Montaje por path en `src/main.tsx`; contenido en `src/features/demo-day/`. Local: http://localhost:3000/demo-day.
 - **CTA "Ver todas las opciones" (2026-07-29):** ya no redirige a Search. Simula una búsqueda (spinner ~1s) y muestra en su sitio el aviso "Hoy no hay más opciones" con las opciones ya vistas y los filtros activos; se resetea al cambiar presupuesto/barrios/tipo. Solo se renderiza si hay resultados. PR #2 mergeado en `main`.
 - **Nav adaptativa (2026-07-29):** en desktop (`@3xl/app`) los tabs suben a una barra horizontal bajo el header (Dashboard, Search, Saved; Profile se accede por el avatar) y la barra inferior se oculta. En móvil sigue igual: 4 tabs abajo. Fuente única `MAIN_TABS` en `src/App.tsx`.
 - **Escala responsive de desktop (2026-07-29):** tipografía, avatar y espaciados crecen con container queries `@3xl/app`/`@5xl/app`; hero "3 nuevas opciones" ocupa el ancho; contenido centrado a máx. 1440px; grid de tarjetas por contenedor (1 / 2 / 3 columnas). Móvil intacto. Foto de Gràcia regenerada con más nitidez (`*_hq.jpg`).
