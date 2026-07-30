@@ -107,7 +107,7 @@ export const DEMO_DAY_SLIDES: DemoDaySlide[] = [
       {
         id: "herramientas",
         label: "Herramientas",
-        value: "Sketch (layouts), AI Studio (flujos), Cursor (código)",
+        value: "stitch (layouts), AI Studio (flujos), Cursor (código)",
       },
       {
         id: "verifico",
